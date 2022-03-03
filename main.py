@@ -36,7 +36,8 @@ def solution2(matrix):
         for j in range(len(matrix[i])):
             print("{:4d}".format(matrix[i][j]), end="")
         print()
-    sol2(matrix)
+    soll2(matrix)
+    print()
     for i in range(len(matrix)):
         for j in range(len(matrix[i])):
             print("{:4d}".format(matrix[i][j]), end="")
@@ -44,43 +45,35 @@ def solution2(matrix):
     print()
 
 
-def sol2(matrix):
-    MaxN = 0
-    N = 0
-    a = []
-    b = []
+def soll2(matrix):
+    n=0
+    k=0
+    a=[]
+    b=[]
     for i in range(len(matrix)):
         for j in range(len(matrix[i])):
-            a.append(matrix[j][i])
-        Max = max(a)
-        a.clear()
-        if Max > MaxN:
-            N = i
-            MaxN = Max
-    MinN = MaxN
-    K = 0
+            if matrix[i][j]==np.amin(matrix):
+              k=j
+    for i in range(len(matrix)):
+        for j in range(len(matrix[i])):
+            if matrix[i][j] == np.amax(matrix):
+                n = j
+                break
+    for i in range(len(matrix)):
+        for j in range(len(matrix[i])):
+            if i == n:
+                a.append(matrix[j][i])
+            if i == k:
+                b.append(matrix[j][i])
 
     for i in range(len(matrix)):
         for j in range(len(matrix[i])):
-            b.append(matrix[j][i])
-        Min = min(b)
-        b.clear()
-        if Min <= MinN:
-            K = i
-            MinN = Min
-    for i in range(len(matrix)):
-        for j in range(len(matrix[i])):
-            if i == N:
-                a.append(matrix[j][i])
-            if i == K:
-                b.append(matrix[j][i])
-    for i in range(len(matrix)):
-        for j in range(len(matrix[i])):
-            if i == N:
+            if i == n:
                 matrix[j][i] = b[j]
-            if i == K:
+            if i == k:
                 matrix[j][i] = a[j]
     return matrix
+
 
 
 if __name__ == '__main__':
@@ -95,75 +88,74 @@ if __name__ == '__main__':
 
 
 def solution3(matrix):
-    n=0
-    v=0
+    n = 0
+    v = 0
     r = np.empty((len(matrix), len(matrix)), dtype="float32")
-    result=np.empty((len(matrix),3), dtype="float32")
+    np.empty((len(matrix), 3), dtype="float32")
     for i in range(len(matrix)):
-        x=matrix[i][0];
+        x = matrix[i][0];
         y = matrix[i][1];
         if y == 0:
-          k=x
+            k = x
         else:
-          k = x / y
+            k = x / y
         max = matrix[i][2]
         for j in range(len(matrix)):
             xx = matrix[j][0];
             yy = matrix[j][1];
             if yy == 0:
-              kk=xx
+                kk = xx
             else:
-              kk = xx / yy
+                kk = xx / yy
             if k == kk:
-             r[n][0] = matrix[j][0];
-             r[n][1] = matrix[j][1];
-             r[n][2] = matrix[j][2];
-             n=n+1
+                r[n][0] = matrix[j][0];
+                r[n][1] = matrix[j][1];
+                r[n][2] = matrix[j][2];
+                n = n + 1
         if n > 1:
             for j in range(len(matrix)):
-              if max < r[j][2]:
-               max = r[j][2]
-               x = r[j][0]
-               y = r[j][1]
+                if max < r[j][2]:
+                    max = r[j][2]
+                    x = r[j][0]
+                    y = r[j][1]
             print(x, y, max)
-        n=0
+        n = 0
 
 
 if __name__ == '__main__':
     matrix1 = [[1, 1, 0], [1, 1, 3], [1, 1, 2], [2, 3, 4], [2, 3, 5], [2, 3, 8]]
     solution3(matrix1)
 
+
 def solution4(string):
-    if string.find("(")!=-1:
-        while string.find("(")!=-1:
-            x=string.find("(")
-            y=string.find(")")
-            z=string.find("(", x+1)
-            if z<y:
+    if string.find("(") != -1:
+        while string.find("(") != -1:
+            x = string.find("(")
+            y = string.find(")")
+            z = string.find("(", x + 1)
+            if z < y:
                 while z > x & x < y:
-                    x=z
-                    z=string.find("(",x)
-                string=string[0:int(x)]+string[int(y+1):int(len(string))]
+                    x = z
+                    z = string.find("(", x)
+                string = string[0:int(x)] + string[int(y + 1):int(len(string))]
             else:
                 string = string[0: x] + string[y + 1: len(string)]
     return string
 
+
 if __name__ == '__main__':
-    S1="Выбрать (в виде списка) из текста все даты"
-    S1= solution4(S1)
+    S1 = "Выбрать (в виде списка) из текста все даты"
+    S1 = solution4(S1)
     print(S1)
-    s2="Написать (функцию) представления числа (до миллиона включительно) в виде строки"+ " Обработать текст (следующим образом: (в конце каждого слова))  "
-    s2=solution4(s2)
+    s2 = "Написать (функцию) представления числа (до миллиона включительно) в виде строки" + " Обработать текст (следующим образом: (в конце каждого слова))  "
+    s2 = solution4(s2)
     print(s2)
-    s3="Программа разработана на C# (С# (произносится си шарп) – объектно-ориентированный язык программирования) студентами ВГУ (Воронежский государственный университет)!"
-    s3=solution4(s3)
+    s3 = "Программа разработана на C# (С# (произносится си шарп) – объектно-ориентированный язык программирования) студентами ВГУ (Воронежский государственный университет)!"
+    s3 = solution4(s3)
     print(s3)
-    s4="(())стр(о)ка"
-    s4=solution4(s4)
+    s4 = "(())стр(о)ка"
+    s4 = solution4(s4)
     print(s4)
-    s5="(в виде списка)"
-    s5=solution4(s5)
+    s5 = "(в виде списка)"
+    s5 = solution4(s5)
     print(s5)
-
-
-
