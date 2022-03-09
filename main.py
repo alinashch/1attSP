@@ -1,21 +1,18 @@
+import dictionary as dictionary
 import numpy as np
+from collections import defaultdict
 
 
 def sol1(list1):
     print(list1)
-    solution1(list1)
-    print(list1)
+    v = solution1(list1)
+    print(v)
     print()
 
 
 def solution1(list):
-    for i in list:
-        n = list.count(i)
-        if (n > 1):
-            while (n > 0):
-                list.remove(i)
-                n = list.count(i)
-    return list
+    v = [x for x in list if list.count(x) == 1]
+    return v
 
 
 if __name__ == '__main__':
@@ -32,48 +29,32 @@ if __name__ == '__main__':
 
 
 def solution2(matrix):
-    for i in range(len(matrix)):
-        for j in range(len(matrix[i])):
-            print("{:4d}".format(matrix[i][j]), end="")
-        print()
-    soll2(matrix)
+    matrix=np.array(matrix)
+    print(matrix)
+    matrix=soll2(matrix)
     print()
-    for i in range(len(matrix)):
-        for j in range(len(matrix[i])):
-            print("{:4d}".format(matrix[i][j]), end="")
-        print()
+    print(matrix)
     print()
 
 
 def soll2(matrix):
-    n=0
-    k=0
-    a=[]
-    b=[]
+    n = 0
+    k = 0
+    q = 0
     for i in range(len(matrix)):
         for j in range(len(matrix[i])):
-            if matrix[i][j]==np.amin(matrix):
-              k=j
-    for i in range(len(matrix)):
-        for j in range(len(matrix[i])):
+            if matrix[i][j] == np.amin(matrix):
+                k = j
             if matrix[i][j] == np.amax(matrix):
-                n = j
-                break
-    for i in range(len(matrix)):
-        for j in range(len(matrix[i])):
-            if i == n:
-                a.append(matrix[j][i])
-            if i == k:
-                b.append(matrix[j][i])
+                if q == 0:
+                    q = 10
+                    n = j
 
-    for i in range(len(matrix)):
-        for j in range(len(matrix[i])):
-            if i == n:
-                matrix[j][i] = b[j]
-            if i == k:
-                matrix[j][i] = a[j]
-    return matrix
-
+    print(k, n)
+    matrix=matrix.transpose()
+    matrix[[k,n]] = matrix[[n,k]]
+    matrix1=matrix.transpose()
+    return matrix1
 
 
 if __name__ == '__main__':
@@ -83,15 +64,11 @@ if __name__ == '__main__':
     solution2(matrix2)
     matrix3 = [[-2, -5, 0, 9], [2, 5, 1, -5], [7, 9, 2, 6], [1, 7, -2, 3]]
     solution2(matrix3)
-    matrix4 = [[2, -10, 0, 7], [1, 10, 2, 3], [8, 9, -1, 2], [3, 5, 6, 7]]
-    solution2(matrix4)
+
 
 
 def solution3(matrix):
-    n = 0
-    v = 0
-    r = np.empty((len(matrix), len(matrix)), dtype="float32")
-    np.empty((len(matrix), 3), dtype="float32")
+    dict = defaultdict(list)
     for i in range(len(matrix)):
         x = matrix[i][0];
         y = matrix[i][1];
@@ -99,32 +76,19 @@ def solution3(matrix):
             k = x
         else:
             k = x / y
-        max = matrix[i][2]
-        for j in range(len(matrix)):
-            xx = matrix[j][0];
-            yy = matrix[j][1];
-            if yy == 0:
-                kk = xx
-            else:
-                kk = xx / yy
-            if k == kk:
-                r[n][0] = matrix[j][0];
-                r[n][1] = matrix[j][1];
-                r[n][2] = matrix[j][2];
-                n = n + 1
-        if n > 1:
-            for j in range(len(matrix)):
-                if max < r[j][2]:
-                    max = r[j][2]
-                    x = r[j][0]
-                    y = r[j][1]
-            print(x, y, max)
-        n = 0
+        a=[x,y,matrix[i][2]]
+        dict[k].append(a)
+    q=dict.keys()
+    for i in q:
+        print(max(dict[i]))
 
 
 if __name__ == '__main__':
-    matrix1 = [[1, 1, 0], [1, 1, 3], [1, 1, 2], [2, 3, 4], [2, 3, 5], [2, 3, 8]]
+    matrix1 = [[2, 3, 4],[1, 1, 0], [1, 1, 3],   [2, 3, 5],[1, 1, 2], [2, 3, 8]]
     solution3(matrix1)
+
+
+
 
 
 def solution4(string):
